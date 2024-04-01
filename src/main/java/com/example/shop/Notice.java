@@ -10,7 +10,7 @@ import java.sql.Date;
 @Entity
 public class Notice {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-    String title;
-    Date date;
+    public Long id;
+    public String title;
+    public Date date;
 }
