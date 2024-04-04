@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -58,5 +59,16 @@ public class ItemController {
             itemRepository.save(item);
 
         return "redirect:/list";
+    }
+
+    @GetMapping("/detail/{id}")
+    String detail(Model model, @PathVariable Integer id) {
+        Optional<Item> result = itemRepository.findById(Long.valueOf(id));
+
+        if(result.isPresent()) {
+            Item item = result.get();
+            model.addAttribute("detail", item);
+        }
+        return "detail.html";
     }
 }
