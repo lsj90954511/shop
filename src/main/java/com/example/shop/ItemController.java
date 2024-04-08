@@ -2,6 +2,7 @@ package com.example.shop;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,10 +16,11 @@ import java.util.Optional;
 public class ItemController {
 
     private final ItemRepository itemRepository;
+    private final ItemService itemService;
 
     @GetMapping("/list")
     String list(Model model) {
-        List<Item> result = itemRepository.findAll();
+        List<Item> result = itemService.getAllItems();
         model.addAttribute("items", result);
 
         var a = new Item();
@@ -53,22 +55,24 @@ public class ItemController {
     }*/
 
     @PostMapping("/add")
-    String addPost(@ModelAttribute Item item){
+    String addPost(String title, Integer price){
 
-        if (item.getTitle().length() <= 50)
-            itemRepository.save(item);
+        itemService.saveItem(title, price);
 
         return "redirect:/list";
     }
 
     @GetMapping("/detail/{id}")
-    String detail(Model model, @PathVariable Integer id) {
-        Optional<Item> result = itemRepository.findById(Long.valueOf(id));
+    String detail(Model model, @PathVariable Long id) throws Exception{
+        //throw new Exception();
+        Optional<Item> result = itemService.getItemById(id);
 
         if(result.isPresent()) {
             Item item = result.get();
             model.addAttribute("detail", item);
+            return "detail.html";
+        } else {
+            return "redirect:/list";
         }
-        return "detail.html";
     }
 }
