@@ -28,4 +28,12 @@ public class ItemService {
         Optional<Item> result = itemRepository.findById(id);
         return result;
     }
+
+    public void updateItem(Long id, String title, Integer price) {
+        Item item = new Item();
+        item.id = id;
+        item.setTitle(title);
+        item.setPrice(price);
+        itemRepository.save(item);
+    }
 }

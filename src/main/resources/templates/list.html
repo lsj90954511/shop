@@ -16,6 +16,7 @@
                 <h4 th:text="${i.title}">상품명</h4>
             </a>
             <p th:text="${i.price}">가격</p>
+            <a th:href="@{'/edit/' + ${i.id}}">수정</a>
         </div>
     </div>
 </body>

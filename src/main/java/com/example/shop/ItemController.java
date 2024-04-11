@@ -75,4 +75,25 @@ public class ItemController {
             return "redirect:/list";
         }
     }
+
+    //수정 페이지에 아이템 정보 세팅
+    @GetMapping("/edit/{id}")
+    String set(Model model, @PathVariable Long id) {
+        Optional<Item> result = itemService.getItemById(id);
+
+        if(result.isPresent()) {
+            Item item = result.get();
+            model.addAttribute("data", item);
+            return "edit.html";
+        } else {
+            return "redirect:/list";
+        }
+    }
+
+    //아이템 정보 수정하기
+    @PostMapping("/edit/{id}")
+    String updateItem(String title, Integer price, @PathVariable Long id) {
+        itemService.updateItem(id, title, price);
+        return "redirect:/list";
+    }
 }
