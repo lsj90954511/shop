@@ -9,7 +9,9 @@
 <div th:replace="~{ nav.html::navbar }"></div>
 
 <div class="edit">
-    <form th:action="@{'/edit/' + ${data.id}}" method="POST">
+    <!--<form th:action="@{'/edit/' + ${data.id}}" method="POST">-->
+    <form action="/edit" method="POST">
+        <input name="id" th:value="${data.id}" style="display:none">
         <input name="title" th:value="${data.title}">
         <input name="price" th:value="${data.price}">
         <button type="submit">수정</button>

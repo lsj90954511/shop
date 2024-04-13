@@ -91,8 +91,14 @@ public class ItemController {
     }
 
     //아이템 정보 수정하기
-    @PostMapping("/edit/{id}")
+    /*@PostMapping("/edit/{id}")
     String updateItem(String title, Integer price, @PathVariable Long id) {
+        itemService.updateItem(id, title, price);
+        return "redirect:/list";
+    }*/
+    //아이템 정보 수정하기(강의 버전)
+    @PostMapping("/edit")
+    String updateItem(String title, Integer price, Long id) {
         itemService.updateItem(id, title, price);
         return "redirect:/list";
     }

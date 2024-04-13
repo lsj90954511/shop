@@ -31,9 +31,12 @@ public class ItemService {
 
     public void updateItem(Long id, String title, Integer price) {
         Item item = new Item();
-        item.id = id;
-        item.setTitle(title);
-        item.setPrice(price);
-        itemRepository.save(item);
+        if (title.length() < 100 && price >= 0)
+        {
+            item.id = id;
+            item.setTitle(title);
+            item.setPrice(price);
+            itemRepository.save(item);
+        }
     }
 }
