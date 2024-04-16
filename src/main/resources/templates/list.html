@@ -17,7 +17,14 @@
             </a>
             <p th:text="${i.price}">가격</p>
             <a th:href="@{'/edit/' + ${i.id}}">수정</a>
+            <a th:onclick="fetch('/delete?id=[[${i.id}]]',
+            {method : 'DELETE'})
+                .then(r => r.text())
+                .then(() => {
+                    location.reload();
+                })">삭제</a>
         </div>
     </div>
+
 </body>
 </html>

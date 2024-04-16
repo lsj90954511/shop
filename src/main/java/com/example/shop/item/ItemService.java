@@ -1,4 +1,4 @@
-package com.example.shop;
+package com.example.shop.item;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -38,5 +38,9 @@ public class ItemService {
             item.setPrice(price);
             itemRepository.save(item);
         }
+    }
+
+    public void deleteItem(Long id) {
+        itemRepository.deleteById(id);
     }
 }

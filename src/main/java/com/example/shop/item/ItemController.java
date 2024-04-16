@@ -1,7 +1,6 @@
-package com.example.shop;
+package com.example.shop.item;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -101,5 +100,11 @@ public class ItemController {
     String updateItem(String title, Integer price, Long id) {
         itemService.updateItem(id, title, price);
         return "redirect:/list";
+    }
+
+    @DeleteMapping("/delete")
+    ResponseEntity<String> test1(@RequestParam Long id) {
+        itemService.deleteItem(id);
+        return ResponseEntity.status(200).body("삭제완료");
     }
 }
