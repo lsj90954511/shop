@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="/main.css" rel="stylesheet">
+</head>
+<body>
+<div th:replace="~{ nav.html::navbar }">
+</div>
+<h4>마이페이지</h4>
+    <div sec:authentication="principal"></div>
+    <div sec:authentication="principal.username"> </div>
+    <div sec:authrize="isAuthenticated()"></div>
+    <div sec:authrize="isAnonymous()"></div>
+    <div sec:authorize="hasAuthority('일반유저')">
+        <h4>일반유저입니다.</h4>
+    </div>
+</body>
+</html>

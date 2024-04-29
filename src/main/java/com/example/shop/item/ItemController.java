@@ -2,6 +2,7 @@ package com.example.shop.item;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -54,9 +55,9 @@ public class ItemController {
     }*/
 
     @PostMapping("/add")
-    String addPost(String title, Integer price){
+    String addPost(String title, Integer price, String username){
 
-        itemService.saveItem(title, price);
+        itemService.saveItem(title, price, username);
 
         return "redirect:/list";
     }

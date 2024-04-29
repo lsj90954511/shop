@@ -1,5 +1,15 @@
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <div class="nav" th:fragment="navbar">
     <a class="logo">SpringMall</a>
     <a href="/list">List</a>
     <a href="/write">Write</a>
+    <th:block sec:authorize="isAuthenticated()">
+        <a sec:authentication="principal.username"></a>
+        <!--<button th:onclick="fetch('/logout')">로그아웃</button>-->
+        <a href="/logout">로그아웃</a>
+    </th:block>
+    <th:block sec:authorize="isAnonymous()">
+        <button th:onclick="window.location.href='/login'">로그인</button>
+    </th:block>
+
 </div>

@@ -1,16 +1,17 @@
-package com.example.shop;
+package com.example.shop.member;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Member {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
+    private Long id;
+
+    @Column(unique = true, nullable = false)
     private String username;
+    @Column(nullable = false)
     private String password;
+    @Column(nullable = false)
     private String displayName;
 
     public String getUsername() {
@@ -18,8 +19,7 @@ public class Member {
     }
 
     public void setUsername(String username) {
-        if (username.length() < 30)
-            this.username = username;
+        this.username = username;
     }
 
     public String getPassword() {
@@ -36,5 +36,13 @@ public class Member {
 
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

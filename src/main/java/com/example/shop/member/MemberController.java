@@ -1,6 +1,8 @@
-package com.example.shop;
+package com.example.shop.member;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,9 +14,12 @@ public class MemberController {
     private final MemberRepository memberRepository;
     private final MemberService memberService;
 
-    @GetMapping("/join")
-    String join(Model model) {
-        return "join.html";
+    @GetMapping("/register")
+    String join(Authentication auth) {
+        if (auth != null && auth.isAuthenticated())
+            return "list.html";
+        else
+            return "join.html";
     }
 
     @PostMapping("/join")
@@ -23,5 +28,16 @@ public class MemberController {
         memberService.saveMember(username, password, displayName);
 
         return "redirect:/list";
+    }
+
+    @GetMapping("/login")
+    public String login() {
+        return "login.html";
+    }
+
+    @GetMapping("/my-page")
+    public String myPage(Authentication auth){
+
+        return "mypage.html";
     }
 }
