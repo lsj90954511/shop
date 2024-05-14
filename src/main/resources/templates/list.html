@@ -4,6 +4,23 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link href="/main.css" rel="stylesheet">
+    <style>
+        .pagination {
+            display: flex;
+            gap: 5px;
+        }
+        .pagination div {
+            display: inline-block;
+        }
+        .pagination button {
+            background-color: #000;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            margin: 2px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 
@@ -23,6 +40,11 @@
                 .then(() => {
                     location.reload();
                 })">삭제</a>
+        </div>
+    </div>
+    <div class="pagination" th:if="${totalPages > 0}">
+        <div th:each="i : ${#numbers.sequence(1, totalPages)}">
+            <button th:onclick="|location.href='/list/' + ${i}|" th:text="${i}"></button>
         </div>
     </div>
 

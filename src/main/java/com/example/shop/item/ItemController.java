@@ -1,12 +1,16 @@
 package com.example.shop.item;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.print.Pageable;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -107,5 +111,16 @@ public class ItemController {
     ResponseEntity<String> test1(@RequestParam Long id) {
         itemService.deleteItem(id);
         return ResponseEntity.status(200).body("삭제완료");
+    }
+
+    @GetMapping("/list/{page}")
+    String getListPage(Model model, @PathVariable Integer page) {
+
+        Page<Item> result = itemRepository.findPageBy(PageRequest.of(page - 1,5));
+        int totalPages = result.getTotalPages();
+        model.addAttribute("items", result);
+        model.addAttribute("totalPages", totalPages);
+
+        return "list.html";
     }
 }

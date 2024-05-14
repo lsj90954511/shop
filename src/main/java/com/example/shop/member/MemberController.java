@@ -2,11 +2,10 @@ package com.example.shop.member;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequiredArgsConstructor
@@ -37,7 +36,27 @@ public class MemberController {
 
     @GetMapping("/my-page")
     public String myPage(Authentication auth){
-
+        MyUserDetailsService.CustomUser result = (MyUserDetailsService.CustomUser)auth.getPrincipal();
+        System.out.println(result.displayName);
         return "mypage.html";
+    }
+
+    @GetMapping("/user/1")
+    @ResponseBody
+    public MemberDto getUser() {
+        var a = memberRepository.findById(1L);
+        var result = a.get();
+        var data = new MemberDto(result.getUsername(), result.getDisplayName());
+        return data;
+    }
+
+    class MemberDto {
+        public String username;
+        public String displayName;
+
+        MemberDto(String a, String b){
+            this.username = a;
+            this.displayName = b;
+        }
     }
 }
