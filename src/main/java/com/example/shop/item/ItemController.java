@@ -1,5 +1,6 @@
 package com.example.shop.item;
 
+import com.example.shop.comment.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,6 +23,7 @@ public class ItemController {
     private final ItemRepository itemRepository;
     private final ItemService itemService;
     private final S3Service s3Service;
+    private final CommentRepository commentRepository;
 
     @GetMapping("/list")
     String list(Model model) {
@@ -70,6 +72,10 @@ public class ItemController {
     @GetMapping("/detail/{id}")
     String detail(Model model, @PathVariable Long id) throws Exception{
         //throw new Exception();
+
+        List comments = commentRepository.findAllByParentId(id);
+        model.addAttribute("comments", comments);
+
         Optional<Item> result = itemService.getItemById(id);
 
         if(result.isPresent()) {
@@ -134,4 +140,15 @@ public class ItemController {
         System.out.println(result);
         return result;
     }
+
+    @PostMapping("/search")
+    String postSearch(Model model, @RequestParam String searchText) {
+
+        var result = itemRepository.rawQuery1(searchText);
+        System.out.println(result);
+        model.addAttribute("search", result);
+
+        return "search.html";
+    }
+
 }

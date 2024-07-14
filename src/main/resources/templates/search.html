@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="/main.css" rel="stylesheet">
+    <style>
+        .pagination {
+            display: flex;
+            gap: 5px;
+        }
+        .pagination div {
+            display: inline-block;
+        }
+        .pagination button {
+            background-color: #000;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            margin: 2px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div th:replace="~{ nav.html::navbar }"></div>
+
+<div class="card" th:each="i : ${search}">
+    <img src="https://placehold.co/300">
+    <div>
+        <a th:href="@{'/detail/' + ${i.id}}">
+            <h4 th:text="${i.title}">상품명</h4>
+        </a>
+        <p th:text="${i.price}">가격</p>
+        <a th:href="@{'/edit/' + ${i.id}}">수정</a>
+        <a th:onclick="fetch('/delete?id=[[${i.id}]]',
+            {method : 'DELETE'})
+                .then(r => r.text())
+                .then(() => {
+                    location.reload();
+                })">삭제</a>
+    </div>
+</div>
+
+</body>
+</html>

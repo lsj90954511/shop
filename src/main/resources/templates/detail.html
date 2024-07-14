@@ -16,5 +16,25 @@
     <p th:text="${detail.price}">가격</p>
 </div>
 
+<form action="/order" method="POST">
+    <input name="itemName" th:value="${detail.title}" style="display : none">
+    <input name="price" th:value="${detail.price}" style="display : none">
+    <input name="count" placeholder="주문수량">
+
+    <button type="submit">주문</button>
+</form>
+
+<h4>댓글</h4>
+<form action="/comment" method="POST">
+    <input name="content">
+    <input name="parent" th:value="${detail.id}" style="display : none">
+    <button type="submit">전송</button>
+</form>
+<div th:each="i : ${comments}">
+    <span th:text="${i.username}"></span>
+    <span > : </span>
+    <span th:text="${i.content}"></span>
+</div>
+
 </body>
 </html>

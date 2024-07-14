@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link href="/main.css" rel="stylesheet">
+  <style>
+        .pagination {
+            display: flex;
+            gap: 5px;
+        }
+        .pagination div {
+            display: inline-block;
+        }
+        .pagination button {
+            background-color: #000;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            margin: 2px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div th:replace="~{ nav.html::navbar }"></div>
+
+<div th:each="i : ${allSales}">
+  <a th:text="${i.itemName}">상품명</a>
+  <a th:text="${i.price}">가격</a>
+  <a th:text="${i.count}">수량</a>
+  <a th:text="${i.member.displayName}">주문자</a>
+  <a th:text="${i.created}">주문일시</a>
+</div>
+
+</body>
+</html>
